@@ -1,0 +1,30 @@
+body {
+    overflow-x: hidden;
+    margin-top: 50px;
+    margin-bottom: 60px;
+
+}
+.navbar
+{
+    background-color: dodgerblue;
+}
+.navbar-header
+{
+    color: white;
+}
+
+.pb-chevron
+{
+    margin-left: 5px;
+}
+
+.navbar a {
+    color: white;
+}
+.mycontent-left {
+    border-right: 1px
+    solid #333;
+    border-color: darkgrey;
+    margin-top: 0px;
+    height: 130vw;
+}

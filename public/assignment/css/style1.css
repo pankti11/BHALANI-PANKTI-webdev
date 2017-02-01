@@ -8,16 +8,31 @@ body {
 {
     background-color: dodgerblue;
 }
+.pb-hidden-margin
+{
+    margin-right: 30px;
+}
 .navbar-header
 {
     color: white;
 }
 
+.color-white
+{
+    color:white;
+}
+.responsive-img-width
+{
+    width: 100% !important;
+}
+.eye-margin
+{
+    margin-left: 7px;
+}
 .pb-chevron
 {
     margin-left: 5px;
 }
-
 a
 {
     text-decoration: none;

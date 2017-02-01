@@ -18,6 +18,11 @@ body {
     margin-left: 5px;
 }
 
+a
+{
+    text-decoration: none;
+}
+
 .navbar a {
     color: white;
 }

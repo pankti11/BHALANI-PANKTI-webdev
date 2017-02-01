@@ -51,6 +51,11 @@ body {
     height: 130vw
 }
 
+a:hover
+{
+    text-decoration: none;
+}
+
 .innerblock
 {
     position: absolute;

@@ -15,7 +15,7 @@
         vm.websiteId = $routeParams.wid;
         vm.pageId = $routeParams.pid;
 
-        console.log("In New Controller")
+
 
         vm.addNewWidget = newWid;
 
@@ -36,12 +36,12 @@
 
                 var wig = WidgetService.createWidget(vm.pageId,newWidget);
                 if(wig == null) {
-                     console.log("unable to add widget");
+
 
 
                 } else {
                     vm.widgetID = wig;
-                    console.log("widget added successfully");
+
                 }
 
 

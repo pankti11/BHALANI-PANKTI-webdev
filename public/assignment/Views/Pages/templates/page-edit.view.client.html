@@ -22,7 +22,7 @@
         </div>
         <div class="col-xs-11 col-sm-11 col-lg-7 col-md-7">
             <div class="navbar-text pull-right" style="margin-right: 0px;">
-                <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page">
+                <a href="" ng-click="model.update(model.pageInfo)">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </div>
@@ -84,7 +84,7 @@
     <div class="row container-fluid">
         <div class="col-xs-2 col-xs-offset-10 col-md-1 col-md-offset-11 col-lg-1 col-lg-offset-11 col-sm-1 col-sm-offset-11">
             <div class="navbar-text text-center">
-                <a href="/profile/{{model.user_id}}" class="nav-link">
+                <a href="#/profile/{{model.user_id}}" class="nav-link">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </div>

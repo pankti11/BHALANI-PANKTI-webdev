@@ -32,7 +32,7 @@
         function init() {
 
             var widgetInfo = WidgetService.findWidgetById(widgetId)
-            console.log(widgetInfo)
+
             vm.widget = widgetInfo ;
         }
 

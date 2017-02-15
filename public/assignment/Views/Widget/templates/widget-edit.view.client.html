@@ -13,7 +13,7 @@
                 </div>
             </a>
             <p class="navbar-text pull-right">
-                <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="nav-link right-side-button">
+                <a href="" ng-click="model.update(model.widget)" class="nav-link right-side-button">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </p>
@@ -47,7 +47,7 @@
         </div>
 
     </div>
-        <a href="" ng-click="model.update(model.widget)" class="btn btn-Primary btn-block">Update</a>
+        <a href="" ng-click="model.update(model.widget)" class="btn btn-primary btn-block">Update</a>
         <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" ng-click="model.delete()" class="btn btn-danger btn-block">Delete</a>
     </form>
 </div>

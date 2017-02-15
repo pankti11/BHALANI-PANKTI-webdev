@@ -22,7 +22,7 @@
         </div>
         <div class="col-xs-11 col-sm-11 col-lg-7 col-md-7">
             <div class="navbar-text pull-right" style="margin-right: 0px;">
-                <a href="#/user/{{model.user_id}}/website/">
+                <a ng-click="model.update(model.websiteInfo)" href="" >
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </div>
@@ -73,7 +73,7 @@
                     </textarea>
                 </div>
                 <a ng-click="model.delete()"  href="#/user/{{model.user_id}}/website" class="btn btn-danger btn-block">Delete</a>
-                <a href="#/user/{{model.user_id}}/website/{{model.wid}}" ng-click="model.update(model.websiteInfo)" class="btn btn-primary btn-block">Update</a>
+                <a href="" ng-click="model.update(model.websiteInfo)" class="btn btn-primary btn-block">Update</a>
             </form>
         </div>
     </div>

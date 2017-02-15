@@ -22,7 +22,7 @@
                 controllerAs: 'model'
             })
             .when("/profile/:uid",{
-                templateUrl: 'Views/user/templates/profile.view.client.html',
+                templateUrl: 'Views/User/templates/profile.view.client.html',
                 controller: 'profileController',
                 controllerAs: 'model'
             })

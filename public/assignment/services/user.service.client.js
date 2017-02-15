@@ -10,10 +10,10 @@
 
     function userService() {
         var users = [
-            {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
-            {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
-            {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-            {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
+            {_id: "123", email:"abc@gmail.com", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
+            {_id: "234", email:"abc@gmail.com", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
+            {_id: "345", email:"abc@gmail.com", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
+            {_id: "456", email:"abc@gmail.com", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
         ];
 
         var api = {
@@ -33,6 +33,8 @@
                 if( user._id === userId ) {
                     users[u].firstName = newUser.firstName;
                     users[u].lastName = newUser.lastName;
+                    users[u].email = newUser.email
+
                     return user;
                 }
             }
@@ -88,6 +90,7 @@
                         username: newUser.username,
                         password: newUser.password,
                         firstName: "",
+                        email:"",
                         lastName: ""
                     };
                 users.push(userNew);

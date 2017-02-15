@@ -32,9 +32,6 @@
 
         };
 
-
-
-
          function deleteProfile(userID_to_be_deleted) {
 
             var user_to_be_deleted = UserService.deleteUser(userID_to_be_deleted);

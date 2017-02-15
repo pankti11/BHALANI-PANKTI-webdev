@@ -1,0 +1,47 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-fixed-width">
+            <div class="navbar-text pull-left pb-chevron">
+                <a href="#/user/{{model.user_id}}/website">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </div>
+            <a class="navbar-brand pull-left color-white" href="#">
+                <div class="color-white">
+                    Pages
+                </div>
+            </a>
+            <p class="navbar-text pull-right">
+                <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/new" class="nav-link right-side-button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+<div class="pb-list container-fluid">
+    <ul class="list-group">
+        <li ng-repeat="page in model.pagesList" class="list-group-item">
+            <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{page._id}}/widget" class="nav-link">
+             {{page.name}}
+            </a>
+            <p class="pull-right">
+                <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{page._id}}" class="nav-link right-side-button">
+                    <span class="glyphicon glyphicon-wrench">
+                    </span>
+                </a>
+            </p>
+        </li>
+    </ul>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="row container-fluid">
+        <div class="col-xs-2 col-xs-offset-10 col-md-1 col-md-offset-11 col-lg-1 col-lg-offset-11 col-sm-1 col-sm-offset-11">
+        <div class="navbar-text text-center">
+                <a href="#/profile/{{model.user_id}}" class="nav-link">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

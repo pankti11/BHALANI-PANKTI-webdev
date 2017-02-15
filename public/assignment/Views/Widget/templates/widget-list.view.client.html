@@ -1,0 +1,81 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-fixed-width">
+            <div class="navbar-text pull-left pb-chevron">
+                <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </div>
+            <a class="navbar-brand pull-left color-white" href="#">
+                <div class="color-white">
+                    Widgets
+                </div>
+            </a>
+            <p class="navbar-text pull-right">
+
+
+                <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new" class="nav-link right-side-button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="pb-list container-fluid">
+    <ul class="list-group">
+        <li ng-repeat="widget in model.widgets" class="list-group-item">
+            <div class="innerblock">
+                <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}" class="nav-link">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
+                <a href="#" class="nav-link">
+                    <span class="glyphicon glyphicon-align-justify"></span>
+                </a>
+            </div>
+            <div ng-switch="widget.widgetType" class="intro">
+
+                    <div ng-switch-when="HEADER">
+                        <ng-include src="'views/widget/templates/header.view.client.html'"></ng-include>
+                    </div>
+                    <div ng-switch-when="IMAGE">
+                        <ng-include src="'views/widget/templates/image.view.client.html'"></ng-include>
+                    </div>
+                    <div ng-switch-when="HTML">
+                        <ng-include src="'views/widget/templates/htmlview.view.client.html'"></ng-include>
+                    </div>
+                    <div ng-switch-when="YOUTUBE">
+                        <ng-include src="'views/widget/templates/youtube.view.client.html'"></ng-include>
+                    </div>
+
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="row container-fluid">
+        <div class="col-xs-3 col-md-2 col-lg-2 col-sm-3">
+            <p class="navbar-text pull-left">
+                <a href="#" class="nav-link">
+                    <span class="glyphicon glyphicon-play"></span>
+                </a>
+            </p>
+            <p class="navbar-text pull-left eye-margin">
+                <a href="#" class="nav-link">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </a>
+            </p>
+        </div>
+
+        <div class="col-xs-2 col-xs-offset-7 col-md-1 col-md-offset-9 col-lg-1 col-lg-offset-9 col-sm-1 col-sm-offset-8">
+        <div class="navbar-text text-center">
+                <a href="../../User/templates/profile.view.client.html" class="nav-link">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

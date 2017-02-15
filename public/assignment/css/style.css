@@ -2,7 +2,7 @@ input.form-control {
     margin-bottom: 5px;
 }
 
-.navbar-header{
+.navbar-fixed-width{
     width:100%;
 }
 
@@ -14,6 +14,8 @@ input.form-control {
 .navbar a {
     color: white;
 }
+
+
 .color-white{
     color: white;
 }

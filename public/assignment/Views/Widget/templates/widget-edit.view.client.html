@@ -1,0 +1,64 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-fixed-width">
+            <div class="navbar-text pull-left pb-chevron" >
+                <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </div>
+            <a class="navbar-brand pull-left" href="#">
+                <div class="color-white">
+                Widget Edit
+                </div>
+            </a>
+            <p class="navbar-text pull-right">
+                <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="nav-link right-side-button">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <form>
+
+        <br>
+        <div class="alert alert-danger" ng-show="model.error">
+            {{model.error}}
+        </div>
+        <div class="alert alert-success" ng-show="model.message">
+            {{model.message}}
+        </div>
+    <div ng-switch="model.widget.widgetType">
+
+        <div ng-switch-when="HEADER">
+            <ng-include src="'views/widget/templates/header-edit.view.client.html'"></ng-include>
+        </div>
+        <div ng-switch-when="IMAGE">
+            <ng-include src="'views/widget/templates/image-edit.view.client.html'"></ng-include>
+        </div>
+        <div ng-switch-when="HTML">
+            <ng-include src="'views/widget/templates/htmlview-edit.view.client.html'"></ng-include>
+        </div>
+        <div ng-switch-when="YOUTUBE">
+            <ng-include src="'views/widget/templates/youtube-edit.view.client.html'"></ng-include>
+        </div>
+
+    </div>
+        <a href="" ng-click="model.update(model.widget)" class="btn btn-Primary btn-block">Update</a>
+        <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" ng-click="model.delete()" class="btn btn-danger btn-block">Delete</a>
+    </form>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="row container-fluid">
+        <div class="col-xs-2 col-xs-offset-10 col-md-1 col-md-offset-11 col-lg-1 col-lg-offset-11 col-sm-1 col-sm-offset-11">
+            <div class="navbar-text text-center">
+                <a href="#/profile/{{model.user_id}}" class="nav-link">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

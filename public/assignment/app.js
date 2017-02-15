@@ -4,6 +4,6 @@
 
 (function () {
     angular
-        .module("WebAppMaker",["ngRoute"]);
-
+        .module("WebAppMaker", ["ngRoute"]);
+    console.log("Hello from app.js")
 })();

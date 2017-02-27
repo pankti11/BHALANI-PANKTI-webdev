@@ -8,14 +8,16 @@
         .module("WebAppMaker")
         .controller("WidgetNewController", WidgetNewController);
 
-    function WidgetNewController($sce, $routeParams, WidgetService) {
+    function WidgetNewController($sce, $routeParams, WidgetService,$location) {
         var vm = this;
 
         vm.user_id = $routeParams.uid;
         vm.websiteId = $routeParams.wid;
         vm.pageId = $routeParams.pid;
 
-
+        var userId =$routeParams.uid;
+        var websiteId = $routeParams.wid;
+        var pageId = $routeParams.pid;
 
         vm.addNewWidget = newWid;
 
@@ -24,32 +26,30 @@
             if (chooser === 1) {
                 newWidget = "HEADER"
             }
-            if (chooser == 2){
+            if (chooser === 2) {
                 newWidget = "HTML"
             }
-            if (chooser == 3){
+            if (chooser === 3) {
                 newWidget = "IMAGE"
             }
-            if (chooser == 4){
+            if (chooser === 4) {
                 newWidget = "YOUTUBE"
             }
 
-                var wig = WidgetService.createWidget(vm.pageId,newWidget);
-                if(wig == null) {
+            var promise = WidgetService.createWidget(pageId, {'WidgetType' : newWidget});
 
-
-
-                } else {
-                    vm.widgetID = wig;
-
-                }
-
-
-
+            promise
+                .success(addnewWidget)
+                .error(errorInAddingNewWidget)
         }
 
+        function addnewWidget(wig) {
+            $location.url('/user/' + userId + '/website/' + websiteId + '/page/' + pageId + '/widget/' + wig);
 
+        }
+        function errorInAddingNewWidget() {
 
+        }
 
     }
 

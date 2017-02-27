@@ -8,7 +8,7 @@
         .module("WebAppMaker")
         .factory("PageService",pageService);
 
-    function pageService() {
+    function pageService($http) {
 
         var pages =
             [
@@ -20,7 +20,7 @@
         var api = {
             "pages": pages,
             "createPage": createPage,
-            "findPageByWebsiteId": findPageByWebsiteId,
+            "findAllPagesForWebsite": findAllPagesForWebsite,
             "findPageById": findPageById,
             "updatePage": updatePage,
             "deletePage": deletePage
@@ -28,88 +28,27 @@
 
         return api;
         function updatePage(pageId, newPage) {
-            for (var p in pages) {
-                var page = pages[p];
-                if (page._id === pageId) {
-                    pages[p].name = newPage.name;
-                    pages[p].description = newPage.description;
-                    pages[p].websiteId = newPage.websiteId;
 
-                    return page;
-                }
-            }
-            return null;
+            return $http.put("/api/page/" + pageId,newPage);
         }
 
         function deletePage(pid) {
-            for (var p in pages) {
-                var page = pages[p];
-                if (page._id === pid) {
-                    var index = pages.indexOf(page);
-                    pages.splice(index, 1)
 
-                    return pid;
-                }
-            }
-            return null;
-
-
+            return $http.delete("/api/page/"+pid);
         }
 
-        function findPageByWebsiteId(websiteID) {
-            var pageslist = []
-            for (var p in pages) {
-                var page = pages[p];
-                if (page.websiteId === websiteID) {
-                    pageslist.push(page)
-                }
 
-            }
-            return pageslist;
+        function findAllPagesForWebsite(websiteID) {
+           return $http.get("/api/website/"+ websiteID + "/page");
         }
 
         function findPageById(pid) {
-            for (var p in pages) {
-                var page = pages[p];
-                if (page._id === pid) {
-                    return angular.copy(page);
-                }
-            }
-            return null;
+            return $http.get("/api/page/" + pid);
         }
 
         function createPage(wid,newPage) {
-
-
-            var today = new Date();
-            var time = today.getDate() + today.getFullYear() + today.getMonth() + today.getHours() + today.getMinutes() + today.getSeconds();
-
-            time = time.toString();
-
-            try {
-                var pageNew =
-                {
-                    _id: time,
-                    websiteId: wid,
-                    name: newPage.name,
-                    description: newPage.description
-                };
-
-                pages.push(pageNew);
-
-                return time;
-            }
-            catch(err)
-            {
-                return null;
-            }
-
+            return $http.post("/api/website/" + wid + "/page",newPage);
         }
-
-
-
-
-
     }
 
 })();

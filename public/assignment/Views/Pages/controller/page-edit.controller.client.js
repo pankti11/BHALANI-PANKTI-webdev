@@ -11,7 +11,7 @@
         .module("WebAppMaker")
         .controller("pageEditController", pageEditController);
 
-    function pageEditController($routeParams,PageService) {
+    function pageEditController($routeParams,PageService,$location) {
 
         var vm = this;
         var userId = $routeParams['uid'];
@@ -23,40 +23,74 @@
         init();
 
         function init() {
-            var PagesList = PageService.findPageByWebsiteId(websiteId);
-            vm.pagesList = PagesList;
-            vm.user_id = userId;
+            PageService
+                .findAllPagesForWebsite(websiteId)
+                .success(renderPageList)
+                .error(errorMessage);
 
-            vm.websiteId = websiteId;
-            var pageInfo = PageService.findPageById(pageId)
+
+            PageService
+                .findPageById(pageId)
+                .success(getPage)
+                .error(errorMessage);
+
+
+        };
+
+        function getPage(pageInfo) {
             vm.pageInfo = pageInfo ;
 
-        };
+        }
 
+        function renderPageList(pagesList) {
+            vm.pagesList = pagesList;
+            vm.user_id = userId;
+            vm.websiteId = websiteId;
 
+        }
 
+        function errorMessage() {
+
+        }
 
          function update(newPage) {
-            var page = PageService.updatePage(pageId, newPage);
-            if(page == null) {
-                vm.error = "unable to update user";
+             var promise = PageService.updatePage(pageId, newPage);
 
-            }
-            else {
-                vm.message = "user successfully updated"
+             promise
+                 .success(PageUpdated)
+                 .error(PageUpdateError);
 
-            }
-        };
+         }
+
+         function PageUpdated () {
+
+             vm.message = "user successfully updated"
+         }
+
+         function PageUpdateError() {
+             vm.error = "unable to update user";
+         }
+
 
          function deletePage() {
-            var page = PageService.deletePage(pageId);
-            if(page == null) {
+             var promise = PageService.deletePage(pageId);
 
-                alert("User was not deleted")
-            } else {
-                alert("User deleted successfully")
-            }
-        };
+             promise
+                 .success(pageDeleted)
+                 .error(PageDeleteError);
+         }
+
+         function pageDeleted() {
+             alert("User deleted successfully")
+             $location.url('/user/'+ userId + '/website/' + websiteId + '/page/' + pageId);
+         }
+
+         function PageDeleteError () {
+             alert("User was not deleted")
+             $location.url('/user/' + userId + '/website/' + websiteId + '/page/');
+
+         }
+
 
 
     }

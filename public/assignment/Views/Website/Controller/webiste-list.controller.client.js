@@ -15,11 +15,21 @@
         init();
 
         function init() {
-            var webistesList = WebsiteService.findWebsitesByUser(userId);
 
-            vm.webistesList = webistesList
+            WebsiteService
+                .findAllWebsitesForUser(userId)
+                .success(renderWebistesList)
+                .error(errorMessage)
+
+        }
+        
+        function renderWebistesList(webistesList) {
+            vm.webistesList = webistesList;
             vm.user_id = userId
-
+        }
+        
+        function errorMessage() {
+            
         }
 
 

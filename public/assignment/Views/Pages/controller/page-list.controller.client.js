@@ -15,11 +15,24 @@
         init()
 
         function init() {
-            var pagesList = PageService.findPageByWebsiteId(websiteId);
+            PageService
+                .findAllPagesForWebsite(websiteId)
+                .success(renderPageList)
+                .error(errorMessage);
+
+        }
+
+        function renderPageList(pagesList) {
+
+
 
             vm.pagesList = pagesList
             vm.user_id = userId
             vm.websiteId = websiteId
+
+        }
+
+        function errorMessage() {
 
 
         }

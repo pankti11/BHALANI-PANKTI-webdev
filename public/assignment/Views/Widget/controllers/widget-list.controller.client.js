@@ -20,13 +20,27 @@
         init();
 
         function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
+
+             var promise = WidgetService.findAllWidgetsForPage(vm.pageId);
+
+                promise
+                    .success(getAllWidgets)
+                    .error(errorInGettingWidgets);
+
         }
 
+        function getAllWidgets(widgetList) {
 
+            console.log(widgetList);
+            vm.widgets = widgetList;
+        }
+        
+        function errorInGettingWidgets() {
+            
+        }
 
         function getWidgetTemplateUrl(widgetType) {
-            var url = 'views/widget/templates/widget-'+widgetType+'.view.client.html';
+            var url = 'Views/Widget/templates/widget-'+widgetType+'.view.client.html';
             return url;
         }
 

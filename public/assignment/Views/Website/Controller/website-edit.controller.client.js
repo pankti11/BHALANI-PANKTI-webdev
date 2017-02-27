@@ -7,7 +7,7 @@
         .module("WebAppMaker")
         .controller("websiteEditController", websiteEditController);
 
-    function websiteEditController($routeParams,WebsiteService) {
+    function websiteEditController($routeParams,WebsiteService,$location) {
 
         var vm = this;
         var userId = $routeParams['uid'];
@@ -19,37 +19,75 @@
 
 
         function init() {
-            var webistesList = WebsiteService.findWebsitesByUser(userId);
+            WebsiteService
+                .findAllWebsitesForUser(userId)
+                .success(renderWebistesList)
+                .error(errorMessage)
+
+
+            WebsiteService
+                .findWebsiteById(websiteId)
+                .success(renderWebsiteEdit)
+                .error(errorMessage)
+
+        }
+
+        function renderWebsiteEdit(webInfo) {
+            vm.websiteInfo = webInfo ;
+        }
+
+        function renderWebistesList(webistesList) {
             vm.webistesList = webistesList;
             vm.user_id = userId;
-
             vm.wid = websiteId;
-            var webInfo = WebsiteService.findWebsiteById(websiteId)
-            vm.websiteInfo = webInfo ;
+        }
+
+        function errorMessage() {
+
         }
 
 
 
 
-         function update(newWebsite) {
-            var user = WebsiteService.updateWebsite(websiteId, newWebsite);
-            if(user == null) {
-                vm.error = "unable to update user";
-            }
-            else {
-                vm.message = "user successfully updated"
 
-            }
-        };
+         function update(newWebsite) {
+             var promise = WebsiteService.updateWebsite(websiteId, newWebsite);
+
+             promise
+                 .success(updateWebsite)
+                 .error(errorMessageUpdate)
+         }
+
+         function updateWebsite() {
+             vm.message = "user successfully updated";
+
+         }
+
+        function errorMessageUpdate() {
+            vm.error = "unable to update user";
+        }
 
         function deleteWebsite() {
-            var user = WebsiteService.deleteWebsite(websiteId);
-            if(user == null) {
-                alert("User was not deleted")
-            } else {
-                alert("User deleted successfully")
-            }
-        };
+
+            var promise = WebsiteService.deleteWebsite(websiteId);
+
+            promise
+                .success(deletewebsite)
+                .error(errorMessageDelete)
+
+        }
+
+        function deletewebsite() {
+            alert("User deleted successfully");
+            $location.url('/user/' + userId + '/website');
+        }
+
+        function errorMessageDelete() {
+            alert("User was not deleted");
+            $location.url('/user/' + userId + '/website');
+
+        }
+
 
 
     }

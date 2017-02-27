@@ -16,33 +16,55 @@
         init();
 
 
-        function update(newUser) {
-            var user = UserService.updateUser(userId, newUser);
-            if (user == null) {
-                vm.error = "unable to update user";
-            } else {
-                vm.message = "user successfully updated"
-            }
-        };
+        function update(user) {
+
+            console.log(user);
+            var promise = UserService.updateUser(userId, user);
+
+            promise
+                .success(updateUser)
+                .error(UpdateError)
+        }
+
+        function UpdateError() {
+            vm.error = "unable to update user";
+        }
+
+        function updateUser(user) {
+            vm.message = "user successfully updated";
+        }
 
         function init() {
-            var user = UserService.findUserById(userId);
-            vm.user = user;
-            vm.user_id = userId;
-
-        };
-
-         function deleteProfile(userID_to_be_deleted) {
-
-            var user_to_be_deleted = UserService.deleteUser(userID_to_be_deleted);
-
-            if (user_to_be_deleted == null){
-                alert("User is not deleted successfully")
-            }
-            else {
-                alert("User deleted successfully")
-            }
+            UserService
+                .findUserById(userId)
+                .success(displayUser);
 
         }
+
+        function displayUser(user) {
+            vm.user = user;
+            vm.user_id = userId;
+            console.log(user);
+        }
+
+         function deleteProfile(userID_to_be_deleted) {
+             var answer = confirm("Are you sure?");
+
+             if (answer) {
+                 UserService
+                     .deleteUser(userID_to_be_deleted)
+                     .success(userDeleted)
+                     .error(userError);
+             }
+         }
+
+         function userDeleted() {
+             alert("User deleted successfully");
+         }
+
+         function userError() {
+             alert("User is not deleted successfully");
+         }
+
     }
 })();

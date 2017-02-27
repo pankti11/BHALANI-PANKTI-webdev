@@ -7,20 +7,31 @@
         .module("WebAppMaker")
         .controller("registerController",registerController);
 
-    function registerController(UserService) {
+    function registerController(UserService,$location) {
         var vm = this;
         vm.addUser = addUser
 
         function addUser(newUser) {
+            console.log("in client side")
+            console.log(newUser);
+            var promise = UserService.createUser(newUser);
 
-            var user = UserService.createUser(newUser)
-            if(user == null) {
-                vm.error = "unable to add user";
-            } else {
-                vm.message = "user added successfully";
-
-                vm.user_id = user;
-            }
+            promise
+                .success(newUserAdd)
+                .error(newUserError);
         };
+
+        function newUserAdd(NewUser) {
+
+            $location.url('/profile/' + NewUser._id);
+
+        }
+
+        function newUserError() {
+            vm.error = 'sorry could not register';
+
+        }
+
+
     }
 })();

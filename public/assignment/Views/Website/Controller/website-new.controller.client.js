@@ -16,28 +16,44 @@
         init();
 
         function init() {
-            var webistesList = WebsiteService.findWebsitesByUser(userId);
+            WebsiteService
+                .findAllWebsitesForUser(userId)
+                .success(renderWebistesList)
+                .error(errorMessage)
 
+        }
+
+        function renderWebistesList(webistesList) {
             vm.webistesList = webistesList;
-            vm.user_id = userId;
+            vm.user_id = userId
+        }
+
+        function errorMessage() {
 
         }
 
 
-
         function addNewWebsite(newWebiste) {
-            var webiste = WebsiteService.createWebsite(userId,newWebiste);
-            if(webiste == null) {
-                vm.error = "unable to add webiste";
-            } else {
-                vm.message = "website added successfully";
 
-                vm.website_ID = webiste;
-                webistesList = WebsiteService.findWebsitesByUser(userId);
-                vm.webistesList = webistesList;
-                vm.user_id = userId;
+            var promise = WebsiteService.createWebsite(userId, newWebiste);
+            promise
+                .success(websiteAdd)
+                .error(websiteAddError)
 
-            }
+
+        }
+
+        function websiteAdd() {
+
+            vm.message = "website added successfully";
+            WebsiteService
+                .findAllWebsitesForUser(userId)
+                .success(renderWebistesList)
+                .error(errorMessage)
+        }
+
+        function websiteAddError() {
+            vm.error = "unable to add webiste";
         }
 
     }

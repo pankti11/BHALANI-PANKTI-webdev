@@ -16,27 +16,46 @@
         init();
 
         function init() {
-            var pagesList = PageService.findPageByWebsiteId(websiteId);
 
-            vm.pagesList = pagesList
-            vm.user_id = userId
-            vm.websiteId = websiteId
-
+            PageService
+                .findAllPagesForWebsite(websiteId)
+                .success(renderPageList)
+                .error(errorMessage);
 
         }
+
+        function renderPageList(pagesList) {
+            vm.pagesList = pagesList;
+            vm.user_id = userId;
+            vm.websiteId = websiteId;
+
+        }
+
+        function errorMessage() {
+
+        }
+
 
         function addNewPage(newPage) {
-            var page = PageService.createPage(websiteId,newPage);
-            if(page == null) {
-                vm.error = "unable to add Page";
-            } else {
-                vm.message = "page added successfully";
-                var pagesList = PageService.findPageByWebsiteId(websiteId);
-                vm.pagesList = pagesList
-                vm.user_id = userId
-                vm.websiteId = websiteId
 
-            }
+            var promise = PageService.createPage(websiteId, newPage);
+            promise
+                .success(pageAdd)
+                .error(pageAddError)
+
         }
+
+        function pageAdd() {
+            vm.message = "page added successfully";
+            PageService
+                .findAllPagesForWebsite(websiteId)
+                .success(renderPageList)
+                .error(errorMessage);
+        }
+
+        function pageAddError() {
+            vm.error = "unable to add Page";
+        }
+
     }
 })();

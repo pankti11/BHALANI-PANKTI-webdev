@@ -11,13 +11,20 @@
         vm.login = login;
 
         function login(user) {
-            var loginUser = UserService.findUserByCredentials(user.username, user.password);
-            if(loginUser != null) {
-                $location.url('/profile/' + loginUser._id);
-                vm.user_id = loginUser._id;
-            } else {
-                vm.error = 'user not found';
-            }
+            var promise = UserService.findUserByCredentials(user.username, user.password)
+                promise
+                    .success(foundUser)
+                    .error(foundUserError);
         }
+
+        function foundUser(loginUser) {
+            $location.url('/profile/' + loginUser._id);
+            vm.user_id = loginUser._id;
+        }
+
+        function foundUserError() {
+            vm.error = 'user not found';
+        }
+
     }
 })();

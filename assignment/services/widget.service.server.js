@@ -5,7 +5,7 @@
 module.exports = function (app) {
 
     var multer = require('multer'); // npm install multer --save
-    var upload = multer({ dest: __dirname+'/../public/uploads' });
+    var upload = multer({ dest: __dirname+'/../../public/uploads' });
     var path = require('path');
 
     app.post("/api/page/:pageId/widget", createWidget);
@@ -35,17 +35,30 @@ module.exports = function (app) {
     function deleteWidget(req,res) {
 
         var widgetId = req.params['widgetId'];
-
+        var curr_index;
         for(var w in widgets) {
             var widget = widgets[w];
             if( widget._id === widgetId ) {
                 var index = widgets.indexOf(widget);
 
+                curr_index = widget.current_index;
                 widgets.splice(index,1)
                 res.sendStatus(200);
-                return true;
+
             }
         }
+        console.log(widgets)
+
+        for(var w in widgets)
+        {
+            if(widgets[w].current_index > curr_index)
+            {
+                widgets[w].current_index = widgets[w].current_index -1;
+            }
+        }
+
+        console.log(widgets)
+        return true;
         res.sendStatus(404);
 
 
@@ -121,26 +134,57 @@ module.exports = function (app) {
 
     function uploadImage(req, res) {
 
+        // var widgetId      = req.body.widgetId;
+        // var width         = req.body.width;
+        // var myFile        = req.file;
+        //
+        // var originalname  = myFile.originalname; // file name on user's computer
+        // var filename      = myFile.filename;     // new file name in upload folder
+        // var path          = myFile.path;         // full path of uploaded file
+        // var destination   = myFile.destination;  // folder where file is saved to
+        // var size          = myFile.size;
+        // var mimetype      = myFile.mimetype;
 
+
+
+
+
+        var pageId        = req.body.pageId;
+        // console.log(pageId);
         var widgetId      = req.body.widgetId;
-        var width         = req.body.width;
+        var width         = "100%";
+        //console.log("wif"+width);
+        var userId        = req.body.userId;
+        var websiteId     = req.body.websiteId;
         var myFile        = req.file;
+        if(myFile)
+        {
+            var destination   = myFile.destination; // folder where file is saved to
 
-        var originalname  = myFile.originalname; // file name on user's computer
-        var filename      = myFile.filename;     // new file name in upload folder
-        var path          = myFile.path;         // full path of uploaded file
-        var destination   = myFile.destination;  // folder where file is saved to
-        var size          = myFile.size;
-        var mimetype      = myFile.mimetype;
-
-        var widget = findWidgetByIdHelper(widgetId);
-        widget.url = "localhost:3000/uploads/" + filename;
-        widget.isUploaded = true;
-        res.redirect("/assignment4/#/user/" + req.body.userId + "/website/" + req.body.websiteId + "/page/" + req.body.pageId + "/widget");
+            for (var i in widgets) {
+                if (widgets[i]._id === widgetId) {
+                    widgets[i].width = width;
+                    widgets[i].url = req.protocol + '://' +req.get('host')+"/uploads/"+myFile.filename;
+                    pageId = widgets[i].pageId;
+                }
+            }}
 
 
+
+
+
+        // console.log("cgvhbjkl")
+        // console.log(widgetId);
+        // var widget = findWidgetByIdHelper(widgetId);
+        // console.log(widget);
+        // widget.url = "localhost:3000/uploads/" + filename;
+        // widget.isUploaded = true;
+        // console.log(req.body)
+        res.redirect("/assignment/#/user/" + req.body.userId + "/website/" + req.body.websiteId + "/page/" + req.body.pageId + "/widget");
 
     }
+    
+
 
     function ReArrangeWidgets(req,res) {
 
@@ -185,9 +229,6 @@ module.exports = function (app) {
             var new_index = '0';
             var temp;
             var temp_index;
-
-
-
 
 
             if(start<end) {
@@ -346,6 +387,19 @@ module.exports = function (app) {
             }
         }
         res.sendStatus(404);
+    }
+
+    function findWidgetByIdHelper(widgetId) {
+
+        for(var w in widgets) {
+            if(widgets[w]._id === widgetId) {
+
+
+                return widgets[w];
+            }
+        }
+
+
     }
 
     function findAllWidgetsForPage(req,res) {

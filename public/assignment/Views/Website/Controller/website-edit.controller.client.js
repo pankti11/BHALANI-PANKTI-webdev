@@ -19,16 +19,18 @@
 
 
         function init() {
-            WebsiteService
-                .findAllWebsitesForUser(userId)
+            var promise = WebsiteService.findAllWebsitesForUser(userId)
+
+            promise
                 .success(renderWebistesList)
                 .error(errorMessage)
 
 
-            WebsiteService
-                .findWebsiteById(websiteId)
-                .success(renderWebsiteEdit)
-                .error(errorMessage)
+            var promise2 = WebsiteService.findWebsiteById(websiteId)
+
+                promise2
+                    .success(renderWebsiteEdit)
+                    .error(errorMessage)
 
         }
 

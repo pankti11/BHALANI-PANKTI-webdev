@@ -11,7 +11,7 @@
         .module("WebAppMaker")
         .controller("WidgetEditController", WidgetEditController);
 
-    function WidgetEditController($routeParams,WidgetService) {
+    function WidgetEditController($routeParams,WidgetService,$location) {
 
         var vm = this;
         var userId = $routeParams['uid'];
@@ -31,35 +31,62 @@
 
         function init() {
 
-            var widgetInfo = WidgetService.findWidgetById(widgetId)
+            var promise = WidgetService.findWidgetById(widgetId);
 
-            vm.widget = widgetInfo ;
+                promise
+                    .success(populateWidgetInfo)
+                    .error(errorMessage)
+
+
         }
 
 
+        function populateWidgetInfo(widgetInfo) {
 
+            vm.widget = widgetInfo ;
+
+        }
+        
+        function errorMessage() {
+            
+        }
 
         function update(newWidget) {
-            var widget_new = WidgetService.updateWidget(widgetId, newWidget);
-            if(widget_new == null) {
-                vm.error = "unable to update Widget";
-            }
-            else {
-                vm.message = "Widget successfully updated"
 
-            }
-        };
+
+            var promise = WidgetService.updateWidget(widgetId, newWidget);
+
+            promise
+                .success(UpdateWidget)
+                .error(errorOnUpdating)
+        }
+
+        function UpdateWidget() {
+
+            vm.message = "Widget successfully updated";
+        }
+
+        function errorOnUpdating() {
+            vm.error = "unable to update Widget";
+        }
 
         function deleteWebsite() {
-            var widget_new = WidgetService.deleteWidget(widgetId);
-            if(widget_new == null) {
-                alert("Widget was not deleted")
-            } else {
-                alert("Widget deleted successfully")
-            }
-        };
+            var promise = WidgetService.deleteWidget(widgetId);
 
+            promise
+                .success(DeleteWebsite)
+                .error(errorDeleteWebsite)
+        }
 
+        function DeleteWebsite() {
+            alert("Widget was not deleted")
+            $location.url('/user/'+ userId + '/website/' + websiteId + "/page/" + pageId + '/widget');
+        }
+
+        function errorDeleteWebsite() {
+            alert("Widget deleted successfully")
+            $location.url('/user/'+ userId + '/website/' + websiteId + "/page/" + pageId + '/widget');
+        }
     }
 
 })();

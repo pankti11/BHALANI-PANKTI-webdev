@@ -13,9 +13,12 @@
         vm.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
         vm.getTrustedHtml = getTrustedHtml;
         vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
+        vm.checkSafeURLImage = checkSafeURLImage;
         vm.user_id = $routeParams.uid;
         vm.websiteId = $routeParams.wid;
         vm.pageId = $routeParams.pid;
+        vm.message = ""
+        vm.error = ""
 
         init();
 
@@ -39,6 +42,20 @@
             
         }
 
+        function checkSafeURLImage(widgetUrl, isUploaded) {
+
+            var url = widgetUrl;
+
+            if(isUploaded != undefined){
+
+                var parts = widgetUrl.split('/');
+                var id = parts[parts.length - 1];
+                url = "http://localhost:3000/uploads/"+ id;
+            }
+
+            return $sce.trustAsResourceUrl(url);
+        }
+
         function getWidgetTemplateUrl(widgetType) {
             var url = 'Views/Widget/templates/widget-'+widgetType+'.view.client.html';
             return url;
@@ -49,6 +66,7 @@
         }
 
         function getYouTubeEmbedUrl(widgetUrl) {
+
             var urlParts = widgetUrl.split('/');
             var id = urlParts[urlParts.length - 1];
             var url = "https://www.youtube.com/embed/"+id;

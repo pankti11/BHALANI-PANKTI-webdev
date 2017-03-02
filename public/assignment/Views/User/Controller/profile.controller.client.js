@@ -35,9 +35,10 @@
         }
 
         function init() {
-            UserService
-                .findUserById(userId)
-                .success(displayUser);
+            var promise = UserService.findUserById(userId)
+
+                promise
+                    .success(displayUser);
 
         }
 

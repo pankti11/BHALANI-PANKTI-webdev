@@ -22,7 +22,7 @@
 </nav>
 
 <div class="container-fluid">
-    <form>
+    <form action = "api/upload" method="post" enctype="multipart/form-data">
 
         <br>
         <div class="alert alert-danger" ng-show="model.error">
@@ -31,6 +31,7 @@
         <div class="alert alert-success" ng-show="model.message">
             {{model.message}}
         </div>
+
     <div ng-switch="model.widget.widgetType">
 
         <div ng-switch-when="HEADER">
@@ -48,7 +49,7 @@
 
     </div>
         <a href="" ng-click="model.update(model.widget)" class="btn btn-primary btn-block">Update</a>
-        <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" ng-click="model.delete()" class="btn btn-danger btn-block">Delete</a>
+        <a ng-click="model.delete()" class="btn btn-danger btn-block">Delete</a>
     </form>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom">

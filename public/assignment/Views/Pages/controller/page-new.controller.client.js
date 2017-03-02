@@ -17,10 +17,12 @@
 
         function init() {
 
-            PageService
-                .findAllPagesForWebsite(websiteId)
-                .success(renderPageList)
-                .error(errorMessage);
+            var promise = PageService.findAllPagesForWebsite(websiteId)
+
+                promise
+                    .success(renderPageList)
+                    .error(errorMessage);
+
 
         }
 

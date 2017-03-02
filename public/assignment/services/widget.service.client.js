@@ -13,16 +13,21 @@
 
         var api = {
 
-
             "createWidget": createWidget,
             "findAllWidgetsForPage": findAllWidgetsForPage,
             "findWidgetById": findWidgetById,
             "updateWidget": updateWidget,
+            "rearrangeWidgets":rearrangeWidgets,
             "deleteWidget": deleteWidget
         }
 
         return api;
 
+        function rearrangeWidgets(start,end,widgetId,PageId) {
+            console.log(start);
+            console.log(end);
+            return $http.get("/api/widget/"+start+ "/" + end + "/" + widgetId + "/" + PageId);
+        }
 
         function deleteWidget(widgetId) {
             return $http.delete("/api/widget/" + widgetId);

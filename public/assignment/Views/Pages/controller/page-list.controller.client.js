@@ -15,8 +15,9 @@
         init()
 
         function init() {
-            PageService
-                .findAllPagesForWebsite(websiteId)
+            var promise = PageService.findAllPagesForWebsite(websiteId)
+
+            promise
                 .success(renderPageList)
                 .error(errorMessage);
 

@@ -71,7 +71,7 @@ module.exports = function (app) {
 
         }
         res.send(pageslist);
-        return;
+        return true;
     }
 
     function findPageById(req,res) {
@@ -82,7 +82,7 @@ module.exports = function (app) {
             var page = pages[p];
             if (page._id === pid) {
                  res.send(page);
-                 return;
+                 return true;
             }
         }
         res.sendStatus(404);

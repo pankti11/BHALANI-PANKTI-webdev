@@ -16,8 +16,9 @@
         init();
 
         function init() {
-            WebsiteService
-                .findAllWebsitesForUser(userId)
+            var promise = WebsiteService.findAllWebsitesForUser(userId)
+
+            promise
                 .success(renderWebistesList)
                 .error(errorMessage)
 
@@ -46,8 +47,9 @@
         function websiteAdd() {
 
             vm.message = "website added successfully";
-            WebsiteService
-                .findAllWebsitesForUser(userId)
+            var promise = WebsiteService.findAllWebsitesForUser(userId)
+
+            promise
                 .success(renderWebistesList)
                 .error(errorMessage)
         }

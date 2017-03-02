@@ -16,8 +16,9 @@
 
         function init() {
 
-            WebsiteService
-                .findAllWebsitesForUser(userId)
+            var promise = WebsiteService.findAllWebsitesForUser(userId)
+
+            promise
                 .success(renderWebistesList)
                 .error(errorMessage)
 

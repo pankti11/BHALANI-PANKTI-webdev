@@ -23,16 +23,18 @@
         init();
 
         function init() {
-            PageService
-                .findAllPagesForWebsite(websiteId)
-                .success(renderPageList)
-                .error(errorMessage);
+            var promise = PageService.findAllPagesForWebsite(websiteId)
+
+                promise
+                    .success(renderPageList)
+                    .error(errorMessage);
 
 
-            PageService
-                .findPageById(pageId)
-                .success(getPage)
-                .error(errorMessage);
+            var promise2 = PageService.findPageById(pageId);
+
+                promise2
+                    .success(getPage)
+                    .error(errorMessage);
 
 
         };

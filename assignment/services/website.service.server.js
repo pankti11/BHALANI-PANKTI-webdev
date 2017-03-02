@@ -76,7 +76,7 @@ module.exports = function (app) {
         }
 
         res.send(list_of_websites);
-        return;
+        return true;
 
     }
 
@@ -91,7 +91,7 @@ module.exports = function (app) {
 
                 res.send(website);
                 res.sendStatus(200);
-                return;
+                return true;
             }
         }
         res.sendStatus(404);

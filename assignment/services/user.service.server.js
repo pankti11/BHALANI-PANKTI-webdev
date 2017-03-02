@@ -50,7 +50,7 @@ module.exports = function (app) {
                 var index = users.indexOf(user);
                 users.splice(index,1);
                 res.sendStatus(200);
-                return;
+                return true;
             }
         }
         res.sendStatus(404);
@@ -66,7 +66,7 @@ module.exports = function (app) {
             var user = users[u];
             if( user.username === username ) {
                 res.send(user)
-                return;
+                return true;
 
             }
         }
@@ -83,7 +83,7 @@ module.exports = function (app) {
             var user = users[u];
             if( user._id === uid ) {
                 res.send(user)
-                return;
+                return true;
             }
         }
 

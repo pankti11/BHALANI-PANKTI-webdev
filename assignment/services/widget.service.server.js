@@ -74,7 +74,7 @@ module.exports = function (app) {
         var time = today.getDate() + today.getFullYear() + today.getMonth() + today.getHours() + today.getMinutes() + today.getSeconds();
         time = time.toString();
 
-        var len = widgets.length;
+        var len = widgets.length + 1;
 
         try {
             if (newWidget === "HEADER") {
@@ -164,6 +164,7 @@ module.exports = function (app) {
             for (var i in widgets) {
                 if (widgets[i]._id === widgetId) {
                     widgets[i].width = width;
+                    
                     widgets[i].url = req.protocol + '://' +req.get('host')+"/uploads/"+myFile.filename;
                     pageId = widgets[i].pageId;
                 }

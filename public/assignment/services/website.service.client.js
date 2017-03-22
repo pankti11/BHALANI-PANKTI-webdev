@@ -17,7 +17,7 @@
 
         var api = {
 
-            "createWebsite": createWebsite,
+            "createWebsiteForUser": createWebsiteForUser,
             "findAllWebsitesForUser": findAllWebsitesForUser,
             "findWebsiteById": findWebsiteById,
             "updateWebsite": updateWebsite,
@@ -43,10 +43,13 @@
         }
 
         function findWebsiteById(wid) {
+
+
+
             return $http.get("/api/website/" + wid);
         }
 
-        function createWebsite(uid,newWebsite) {
+        function createWebsiteForUser(uid,newWebsite) {
 
             return $http.post("/api/user/" + uid + "/website",newWebsite);
         }

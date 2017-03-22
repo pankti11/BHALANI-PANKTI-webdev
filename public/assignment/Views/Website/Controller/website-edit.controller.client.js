@@ -28,6 +28,7 @@
 
             var promise2 = WebsiteService.findWebsiteById(websiteId)
 
+                console.log(websiteId)
                 promise2
                     .success(renderWebsiteEdit)
                     .error(errorMessage)
@@ -36,6 +37,7 @@
 
         function renderWebsiteEdit(webInfo) {
             vm.websiteInfo = webInfo ;
+
         }
 
         function renderWebistesList(webistesList) {
@@ -45,7 +47,7 @@
         }
 
         function errorMessage() {
-
+            console.log("error")
         }
 
 

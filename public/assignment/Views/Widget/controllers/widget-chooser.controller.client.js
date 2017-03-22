@@ -35,8 +35,12 @@
             if (chooser === 4) {
                 newWidget = "YOUTUBE"
             }
+            if (chooser === 5) {
+                newWidget = "INPUT"
+            }
 
-            var promise = WidgetService.createWidget(pageId, {'WidgetType' : newWidget});
+            console.log(newWidget)
+            var promise = WidgetService.createWidget(pageId, {'type' : newWidget});
 
             promise
                 .success(addnewWidget)
@@ -44,7 +48,8 @@
         }
 
         function addnewWidget(wig) {
-            $location.url('/user/' + userId + '/website/' + websiteId + '/page/' + pageId + '/widget/' + wig);
+            console.log(wig._id)
+            $location.url('/user/' + userId + '/website/' + websiteId + '/page/' + pageId + '/widget/' + wig._id);
 
         }
         function errorInAddingNewWidget() {

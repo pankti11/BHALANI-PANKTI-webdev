@@ -2,7 +2,7 @@
  * Created by panktibhalani on 2/26/17.
  */
 
-module.exports = function (app) {
+module.exports = function (app,model) {
     app.post("/api/website/:websiteId/page", createPage);
     app.get("/api/website/:websiteId/page", findAllPagesForWebsite);
     app.get("/api/page/:pageId", findPageById);
@@ -10,12 +10,8 @@ module.exports = function (app) {
     app.delete("/api/page/:pageId", deletePage);
 
 
-    var pages =
-        [
-            {"_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem"},
-            {"_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem"},
-            {"_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem"}
-        ];
+    var pageModel = model.pageModel;
+    var websiteModel = model.websiteModel;
 
 
 
@@ -24,68 +20,73 @@ module.exports = function (app) {
         var pageId = req.params['pageId'];
         var newPage = req.body;
 
-        for (var p in pages) {
-            var page = pages[p];
-            if (page._id === pageId) {
-                pages[p].name = newPage.name;
-                pages[p].description = newPage.description;
-                pages[p].websiteId = newPage.websiteId;
-
+        pageModel
+            .updatePage(pageId,newPage)
+            .then(function () {
                 res.sendStatus(200);
                 return true;
-            }
+            },function () {
+                res.sendStatus(404);
+            });
         }
-        res.sendStatus(404);
-    }
+
 
     function deletePage(req,res) {
-
         var pid = req.params['pageId'];
 
-        for (var p in pages) {
-            var page = pages[p];
-            if (page._id === pid) {
-                var index = pages.indexOf(page);
-                pages.splice(index, 1)
+        pageModel.findPageById(pid)
+            .then(function (page) {
 
+                websiteModel
+                    .deletePageInstance(page._website, pid)
+                    .then(function () {
+                        pageModel
+                            .deletePage(pid)
+                            .then(function () {
+                                res.sendStatus(200);
+                                return true;
+                            }, function () {
 
-                res.sendStatus(200);
-                return true;
-            }
-        }
-        res.sendStatus(404);
+                                res.sendStatus(400);
+                            });
+                    }, function () {
 
-
+                        res.sendStatus(400);
+                    });
+            },function () {
+                res.sendStatus(404);
+            });
     }
+
 
     function findAllPagesForWebsite(req,res) {
 
         var websiteID = req.params['websiteId']
 
-        var pageslist = []
-        for (var p in pages) {
-            var page = pages[p];
-            if (page.websiteId === websiteID) {
-                pageslist.push(page)
-            }
+        pageModel
+            .findAllPagesForWebsite(websiteID)
+            .then(function (pageslist) {
+                res.send(pageslist);
+                return true;
+            },function () {
+                res.sendStatus(404);
+            })
 
-        }
-        res.send(pageslist);
-        return true;
     }
 
     function findPageById(req,res) {
 
         var pid = req.params['pageId'];
 
-        for (var p in pages) {
-            var page = pages[p];
-            if (page._id === pid) {
-                 res.send(page);
-                 return true;
-            }
-        }
-        res.sendStatus(404);
+        pageModel
+            .findPageById(pid)
+            .then(function (page) {
+                res.send(page);
+                return true;
+            },function () {
+                res.sendStatus(404);
+            });
+
     }
 
     function createPage(req,res) {
@@ -93,24 +94,29 @@ module.exports = function (app) {
         var wid = req.params['websiteId'];
         var newPage = req.body;
 
-        var today = new Date();
-        var time = today.getDate() + today.getFullYear() + today.getMonth() + today.getHours() + today.getMinutes() + today.getSeconds();
-
-        time = time.toString();
 
         try {
             var pageNew =
                 {
-                    _id: time,
-                    websiteId: wid,
                     name: newPage.name,
                     description: newPage.description
                 };
 
-            pages.push(pageNew);
+           pageModel
+               .createPage(wid,newPage)
+               .then(function (page) {
+                   websiteModel
+                       .addPageInWebsite(wid,page)
+                       .then(function () {
+                           res.send(page)
+                           res.sendStatus(200);
+                           return true;
+                       });
 
-            res.sendStatus(200);
-            return true;
+               },function () {
+                   res.sendStatus(404);
+               });
+
         }
         catch(err)
         {

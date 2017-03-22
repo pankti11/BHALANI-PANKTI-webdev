@@ -84,7 +84,7 @@
 
          function pageDeleted() {
              alert("User deleted successfully")
-             $location.url('/user/'+ userId + '/website/' + websiteId + '/page/' + pageId);
+             $location.url('/user/'+ userId + '/website/' + websiteId + '/page/');
          }
 
          function PageDeleteError () {

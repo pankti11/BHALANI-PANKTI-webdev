@@ -32,7 +32,7 @@
             {{model.message}}
         </div>
 
-    <div ng-switch="model.widget.widgetType">
+    <div ng-switch="model.widget.type">
 
         <div ng-switch-when="HEADER">
             <ng-include src="'Views/Widget/templates/editors/header-edit.view.client.html'"></ng-include>
@@ -45,6 +45,9 @@
         </div>
         <div ng-switch-when="YOUTUBE">
             <ng-include src="'Views/Widget/templates/editors/youtube-edit.view.client.html'"></ng-include>
+        </div>
+        <div ng-switch-when="INPUT">
+            <ng-include src="'Views/Widget/templates/editors/text-edit.view.client.html'"></ng-include>
         </div>
 
     </div>

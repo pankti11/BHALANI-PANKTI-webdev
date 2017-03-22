@@ -36,7 +36,7 @@
 
         function addNewWebsite(newWebiste) {
 
-            var promise = WebsiteService.createWebsite(userId, newWebiste);
+            var promise = WebsiteService.createWebsiteForUser(userId, newWebiste);
             promise
                 .success(websiteAdd)
                 .error(websiteAddError)

@@ -71,6 +71,8 @@
         }
 
         function deleteWebsite() {
+
+            console.log(widgetId)
             var promise = WidgetService.deleteWidget(widgetId);
 
             promise
@@ -79,13 +81,14 @@
         }
 
         function DeleteWebsite() {
-            alert("Widget was not deleted")
-            $location.url('/user/'+ userId + '/website/' + websiteId + "/page/" + pageId + '/widget');
-        }
-
-        function errorDeleteWebsite() {
             alert("Widget deleted successfully")
             $location.url('/user/'+ userId + '/website/' + websiteId + "/page/" + pageId + '/widget');
+                }
+
+        function errorDeleteWebsite() {
+            alert("Widget was not deleted")
+            $location.url('/user/'+ userId + '/website/' + websiteId + "/page/" + pageId + '/widget/'+widgetId);
+
         }
     }
 

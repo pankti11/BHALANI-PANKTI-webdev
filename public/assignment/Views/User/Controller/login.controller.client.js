@@ -11,6 +11,7 @@
         vm.login = login;
 
         function login(user) {
+            console.log("Credentials")
             var promise = UserService.findUserByCredentials(user.username, user.password)
                 promise
                     .success(foundUser)
@@ -18,8 +19,9 @@
         }
 
         function foundUser(loginUser) {
-            $location.url('/profile/' + loginUser._id);
-            vm.user_id = loginUser._id;
+
+            $location.url('/profile/' + loginUser[0]["_id"]);
+            vm.user_id = loginUser[0]["_id"];
         }
 
         function foundUserError() {

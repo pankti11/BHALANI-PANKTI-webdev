@@ -12,8 +12,7 @@
         vm.addUser = addUser
 
         function addUser(newUser) {
-            console.log("in client side")
-            console.log(newUser);
+
             var promise = UserService.createUser(newUser);
 
             promise

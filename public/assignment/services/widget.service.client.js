@@ -24,9 +24,9 @@
         return api;
 
         function rearrangeWidgets(start,end,widgetId,PageId) {
-            console.log(start);
-            console.log(end);
-            return $http.get("/api/widget/"+start+ "/" + end + "/" + widgetId + "/" + PageId);
+            console.log(start)
+            console.log(end)
+            return $http.put("/page/" + PageId + "/widget?initial=" + start + "&final=" + end);
         }
 
         function deleteWidget(widgetId) {

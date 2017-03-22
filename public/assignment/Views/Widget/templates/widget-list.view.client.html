@@ -25,7 +25,7 @@
 
 <div class="pb-list container-fluid">
     <ul wbdv-directives="" class="list-group">
-        <li ng-repeat="widget in model.widgets" class="list-group-item">
+        <li ng-repeat="widget in model.widgets | orderBy : 'current_index'" class="list-group-item">
             <div class="innerblock">
                 <a href="#/user/{{model.user_id}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}" class="nav-link">
                     <span class="glyphicon glyphicon-cog"></span>
@@ -34,7 +34,7 @@
                     <span class="glyphicon glyphicon-align-justify"></span>
                 </a>
             </div>
-            <div ng-switch="widget.widgetType" class="intro">
+            <div ng-switch="widget.type" class="intro">
 
                     <div ng-switch-when="HEADER">
                         <ng-include src="'Views/Widget/templates/header.view.client.html'"></ng-include>
@@ -47,6 +47,9 @@
                     </div>
                     <div ng-switch-when="YOUTUBE">
                         <ng-include src="'Views/Widget/templates/youtube.view.client.html'"></ng-include>
+                    </div>
+                    <div ng-switch-when="INPUT">
+                        <ng-include src="'Views/Widget/templates/text.view.client.html'"></ng-include>
                     </div>
             </div>
         </li>
